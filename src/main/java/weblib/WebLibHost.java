@@ -55,29 +55,30 @@ public class WebLibHost {
 
             if (method == HttpMethod.get) {
                 Spark.get(path,
-                        (request, response) ->
-                                view.getViewString(path, template, request, response, method)
+                        (request, response) -> view.getViewString(
+                                path, template, request, response, method)
                 );
             }
 
             if (method == HttpMethod.post) {
                 Spark.post(path,
-                        (request, response) ->
-                                view.getViewString(path, template, request, response, method)
+                        (request, response) -> view.getViewString(
+                                path, template, request, response, method)
                 );
             }
 
             if (method == HttpMethod.put) {
                 Spark.put(path,
-                        (request, response) ->
-                                view.getViewString(path, template, request, response, method)
+                        (request, response) -> view.getViewString(
+                                path, template, request, response, method)
                 );
             }
 
             if (method == HttpMethod.delete) {
                 Spark.delete(path,
-                        (request, response) ->
-                                view.getViewString(path, template, request, response, method)
+                        (request, response) -> view.getViewString(
+
+                                path, template, request, response, method)
                 );
             }
         }

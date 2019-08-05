@@ -5,8 +5,10 @@ import net.sf.corn.cps.ClassFilter;
 import spark.ModelAndView;
 import spark.template.pebble.PebbleTemplateEngine;
 import weblib.replication.Replicate;
+import weblib.routing.Route;
 import weblib.views.IView;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -19,17 +21,15 @@ public class TemplateRenderer {
      * Renders a template using Pebble.
      * Note: @Replicate is used to pass template variables to the rendering.
      * @param view
-     * @param path
      * @return
      */
-    public static String renderTemplate(Class<? extends IView> view, String path) {
+    public static String renderTemplate(IView view) {
         // Declare a variable for the attributes
         Map<String, Object> attributes = new HashMap<>();
 
-        // Get the view's reflection class.
-        Class viewClass = view.getClass();
+        Route route = view.getClass().getAnnotation(Route.class);
 
-        for(Field field : viewClass.getDeclaredFields()) {
+        for(Field field : view.getClass().getDeclaredFields()) {
             Replicate replicateAnnotation = field.getAnnotation(Replicate.class);
 
             // If we find the annotation @Replicate, we can add it to the attributes:
@@ -39,13 +39,15 @@ public class TemplateRenderer {
                     value = field.get(view);
                     attributes.put(field.getName(), value);
                 } catch (IllegalAccessException e) {
-                    System.out.println("Ignored @Replicate value due to IllegalAccessException " + e);
+                    System.out.println("(Not an error!) Ignored @Replicate value: " + e);
                 }
             }
         }
 
+        String template = route.Template();
+
         return new PebbleTemplateEngine().render(
-                new ModelAndView(attributes, path)
+                new ModelAndView(attributes, template)
         );
     }
 }
