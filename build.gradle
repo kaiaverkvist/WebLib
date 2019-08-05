@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.sparkjava:spark-core:2.9.1"
+    compile 'com.sparkjava:spark-template-pebble:2.7.1'
+    compile 'net.sf.corn:corn-cps:1.0.1'
+    compile 'com.electronwill.night-config:toml:3.4.0'
+    compile 'org.slf4j:slf4j-simple:1.7.21'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
