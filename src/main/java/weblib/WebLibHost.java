@@ -44,7 +44,7 @@ public class WebLibHost {
         // Set port and forces Spark to init.
         Spark.port(port);
 
-        Spark.staticFileLocation("/public");
+        Spark.staticFileLocation(staticFileLocation);
 
         for (IView view : ViewFinder.Views) {
             Route route = view.getClass().getAnnotation(Route.class);

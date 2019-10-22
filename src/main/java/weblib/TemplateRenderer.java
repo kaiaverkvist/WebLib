@@ -27,9 +27,11 @@ public class TemplateRenderer {
         // Declare a variable for the attributes
         Map<String, Object> attributes = new HashMap<>();
 
-        Route route = view.getClass().getAnnotation(Route.class);
+        Class<?> viewClass = view.getClass();
 
-        for(Field field : view.getClass().getDeclaredFields()) {
+        Route route = viewClass.getAnnotation(Route.class);
+
+        for(Field field : viewClass.getDeclaredFields()) {
             Replicate replicateAnnotation = field.getAnnotation(Replicate.class);
 
             // If we find the annotation @Replicate, we can add it to the attributes:
